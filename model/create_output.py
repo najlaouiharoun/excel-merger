@@ -1,8 +1,7 @@
 import pandas as pd
 
 
-def create_output(dict):
-    frame = pd.DataFrame(dict)
+def create_output(frame):
 
     
     frame.to_csv("resources/output.csv", index=False)
