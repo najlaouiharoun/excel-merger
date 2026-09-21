@@ -1,4 +1,4 @@
-from controller import numsum
+from controller.numsum import numsum
 from controller.compare import compare
 
 
