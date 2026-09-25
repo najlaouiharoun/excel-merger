@@ -1,5 +1,6 @@
 
 from controller.compare import compare
+from controller.round_if_num import _round_if_num
 from model.create_output import create_output
 from model.csv_reader import csv_reader
 import pandas as pd
@@ -11,9 +12,6 @@ def numsum (filepath1, filepath2,file_name,shared_id="Item_ID", ):
     result ={}
     content1 = csv_reader(filepath1)
     content2 = csv_reader(filepath2)
-    content1[shared_id] = content1[shared_id].astype(str).replace('nan', None)
-    content2[shared_id] = content2[shared_id].astype(str).replace('nan', None)
-    print (content2)
     #combining content dataframes by id
     merged_dataframes =pd.merge(content1, content2,on=shared_id,how = "outer", suffixes=('_1', '_2')) 
     result = {shared_id: merged_dataframes[shared_id]}
@@ -35,6 +33,9 @@ def numsum (filepath1, filepath2,file_name,shared_id="Item_ID", ):
         final_col[both_nums] = summed_col[both_nums]
         result[column] = final_col
     result_df = pd.DataFrame(result)
+    
+    result_df = result_df.map(_round_if_num)
+
     create_output(result_df,file_name)
     return result_df
     

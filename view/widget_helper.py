@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import filedialog
 
 from controller.numsum import numsum
+from controller.stupid_sum import stupid_sum
 
 class WidgetHelper:
     def __init__(self,root):
@@ -55,11 +56,14 @@ class WidgetHelper:
             self._label4.config(text="Please select exactly 2 files")
             return
         try:
-            id_col= self._id_entry.get().strip() or "Item_ID"
-            name= self._output_name_entry.get() or "output"
+            id_col= self._id_entry.get().strip()
+            name= self._output_name_entry.get() or "result"
             self._label4.config(text=f"loading...")
             self._root.update()
-            state = numsum(selected[0],selected[1],name,id_col)
+            if id_col == "":
+                state = stupid_sum(selected[0],selected[1],name)
+            else:
+                state = numsum(selected[0],selected[1],name,id_col)
             if state is False:
                 self._label4.config(text=f"files don't match!") 
                  
